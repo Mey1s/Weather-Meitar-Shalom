@@ -1,0 +1,53 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(144, 144, 255);
+    color: white;
+    min-height: 10vh;
+}
+
+.listInNavHeader {
+    list-style-type: none;
+}
+
+.itemListInNavHeader {
+    float: left;
+    padding: 10px 20px;
+    border: 1px solid white;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.itemListInNavHeader:last-child {
+    margin-right: none;
+}
+
+.itemListInNavHeader:hover {
+    border: 1px solid rgb(182, 182, 182);
+    transition: border 0.4s ease;
+}
+
+.itemListInNavHeader:hover > a {
+    color: rgb(182, 182, 182);
+    transition: color 0.4s ease;
+}
+
+.linkInItemListInNavHeader {
+    text-decoration: none;
+    color: white;
+}
+
+.temperatureUnitButton, .darkModeButton {
+    color: rgb(144, 144, 255);
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    width: 120px;
+}
+
+.darkModeButton {
+    margin-right: 10px;
+}
