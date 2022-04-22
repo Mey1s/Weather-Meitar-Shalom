@@ -1,103 +1,43 @@
 .homeContainer {
-    width: 80%;
-    margin: 0 auto;
-    min-height: 80vh;
+  width: 80%;
+  margin: 0 auto;
+  min-height: 80vh;
 }
 
 .searchInputInHome {
-    height: 30px;
-    width: 200px;
-    font-size: 1rem;
-    background-color: transparent;
-    border-radius: 10px;
-    border: 1px solid rgb(144, 144, 255);
-    padding-left: 10px;
-    margin: 20px auto;
-    display: block;
+  height: 30px;
+  width: 200px;
+  font-size: 1rem;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid rgb(144, 144, 255);
+  padding-left: 10px;
+  margin: 20px auto;
+  display: block;
 }
 
 .autoCompleteInHome {
-    position: relative;
-    bottom: 25px;
-    width: fit-content;
-    margin: 0 auto;
-    border: 1px solid rgb(144, 144, 255);
-    border-top: none;
-    width: 210px;
-    height: fit-content;
+  position: relative;
+  bottom: 25px;
+  width: fit-content;
+  margin: 0 auto;
+  border: 1px solid rgb(144, 144, 255);
+  border-top: none;
+  width: 210px;
+  height: fit-content;
 }
 
 .listInAutoCompleteInHome {
-    list-style-type: none;
-    padding-left: 0;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .itemListAutocompleteHome {
-    padding: 10px;
-    cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .itemListAutocompleteHome:hover {
-    background-color: gray;
-    transition: all 0.3s ease;
-}
-
-.homeMainColumn {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(144, 144, 255);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.homeTopButtonsRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.homeTopButtonsLeft,
-.homeTopButtonsRight {
-    display: flex;
-    justify-content: space-between;
-    align-items: top;
-    gap: 10px;
-}
-
-.homeDetailsHeader {
-    margin: 0;
-}
-
-.homeAddButton {
-    border: none;
-    background-color: rgb(144, 144, 255);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.homeAddButton:active {
-    transform: scale(0.95);
-}
-
-.homeAddButton:hover {
-    background-color: rgb(119, 119, 252);
-    color: rgb(236, 235, 235);
-    transition: all 0.6s ease;
-}
-
-.homeMainHeader {
-    text-align: center;
-    color: rgb(144, 144, 255);
-    margin-bottom: 100px;
-    margin-top: 80px;
-}
-
-.homeDaysWeatherRow {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+  background-color: gray;
+  transition: all 0.3s ease;
 }

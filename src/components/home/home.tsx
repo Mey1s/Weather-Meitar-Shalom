@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import { accuWeatherApiKey } from "../../consts";
 import { fetchApiGet } from "../../services/api";
 import { Autocomplete } from "../../types/autocomplete";
@@ -18,10 +19,18 @@ const Home: React.FC = () => {
   }, [searchQuery]);
 
   const getAutocomplete = async () => {
-    const newAutocompletes: Autocomplete[] = await fetchApiGet(
-      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete/?apiKey=${accuWeatherApiKey}&q=${searchQuery}`
-    );
-    setAutoCompletes(newAutocompletes);
+    if (searchQuery !== "" && /^[a-zA-Z]+$/.test(searchQuery)) {
+      // const newAutocompletes: Autocomplete[] = await fetchApiGet(
+      //   `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apiKey=${accuWeatherApiKey}&q=${searchQuery}`
+      // );
+      const newAutocompletes: Autocomplete[] = await fetchApiGet(
+       "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W&q=tel"
+      );
+      setAutoCompletes(newAutocompletes);
+    }
+    else{
+      toast.error("The search value must be in English!");
+    }
   };
 
   return (

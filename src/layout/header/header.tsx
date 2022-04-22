@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import "./header.css";
 import {
@@ -37,11 +37,11 @@ const Header = () => {
   return (
     <header className="headerContainer">
       <nav className="navHeader">
-        <ul className="listInNavHeader">
+        <ul className="listNavHeader">
           {navItems.map((navItem: NavItemI, i: number) => {
             return (
-              <li key={i} className="itemListInNavHeader">
-                <Link to={navItem.link} className="linkInItemListInNavHeader">
+              <li key={i} className="itemListNavHeader">
+                <Link to={navItem.link} className="linkItemListNavHeader">
                   {navItem.title}
                 </Link>
               </li>

@@ -5,6 +5,7 @@ import {
   Routes as Switch,
 } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Favorites from "./components/favorites/favorites";
 import Home from "./components/home/home";
@@ -22,6 +23,7 @@ function App() {
           </Switch>
         </Layout>
       </Provider>
+      <ToastContainer />
     </Router>
   );
 }

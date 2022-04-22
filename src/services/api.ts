@@ -1,7 +1,10 @@
 export const fetchApiGet = async (url: string) => {
   try {
+    console.log(url);
     const res = await fetch(url);
+    console.log(res);
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (err) {
     return { err };

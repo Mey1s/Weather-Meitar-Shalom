@@ -188,15 +188,18 @@ const FiveDaysWeather: React.FC<FiveDaysWeatherProps> = (props) => {
   }, [props.cityLocationKey]);
 
   const getFiveDaysForecasts = async () => {
+    // const newFiveDaysForecasts: FiveDaysForecasts = await fetchApiGet(
+    //   `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${props.cityLocationKey}?apiKey=${accuWeatherApiKey}`
+    // );
     const newFiveDaysForecasts: FiveDaysForecasts = await fetchApiGet(
-      `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${props.cityLocationKey}/?apiKey=${accuWeatherApiKey}`
+      "http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W&metric=true"
     );
     setFiveDaysForecasts(newFiveDaysForecasts);
   };
 
   return (
     <div className="fiveDaysWeatherContainer">
-      <h1 className="homeMainHeader">Scattered clouds</h1>
+      <h1 className="homeMainHeader">Five Days Forecasts</h1>
       <div className="homeDaysWeatherRow">
         {fiveDaysForecasts.DailyForecasts.map(
           (dailyForecast: DailyForecast, i: number) => {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { accuWeatherApiKey } from "../../../consts";
+import { WeatherAppState } from "../../../redux/weather";
 import { fetchApiGet } from "../../../services/api";
+import { fahrenheitToCelsius } from "../../../services/degress";
 import { CurrentWeatherCondition } from "../../../types/currentWeatherCondition";
 
 import "./currentWeather.css";
@@ -36,22 +39,34 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
         "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us",
       Link: "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us",
     });
+  const temperatureUnit = useSelector(
+    (state: WeatherAppState) => state.temperatureUnit
+  );
+
+  const temperatore =
+    temperatureUnit === "C"
+      ? currentWeatherCondition.Temperature.Metric.Value
+      : currentWeatherCondition.Temperature.Imperial.Value;
 
   useEffect(() => {
     getCurrentWeatherCondition();
   }, [props.cityLocationKey]);
 
   const getCurrentWeatherCondition = async () => {
+    // const newCurrentWeatherCondition: CurrentWeatherCondition[] =
+    //   await fetchApiGet(
+    //     `http://dataservice.accuweather.com/currentconditions/v1/${props.cityLocationKey}?apiKey=${accuWeatherApiKey}`
+    //   );
     const newCurrentWeatherCondition: CurrentWeatherCondition[] =
       await fetchApiGet(
-        `http://dataservice.accuweather.com/currentconditions/v1/${props.cityLocationKey}/?apiKey=${accuWeatherApiKey}`
+        "http://dataservice.accuweather.com/currentconditions/v1/215854?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W"
       );
     setCurrentWeatherCondition(newCurrentWeatherCondition[0]);
   };
 
   const addCityToLocalStorage = () => {
     const currentFavorites = JSON.parse(
-      localStorage.getItem("favorites") || ""
+      String(localStorage.getItem("favorites"))
     );
 
     if (!currentFavorites) {
@@ -94,21 +109,17 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
           <i role="button" className="fa fa-times" aria-hidden="true"></i>
           <div className="homeDetails">
             <h4 className="homeDetailsHeader">{props.cityName}</h4>
-            <p className="homeDetailsCelsius">
-              {currentWeatherCondition.Temperature.Metric.Value}
-            </p>
+            <p className="homeDetailsCelsius">{temperatore}</p>
           </div>
         </div>
-        <div className="homeTopButtonsRight">
-          <button className="homeAddButton">
-            <i
-              className="fa fa-heart-o"
-              aria-hidden="true"
-              onClick={addCityToLocalStorage}
-            ></i>
-            Add to favorites
-          </button>
-        </div>
+        <button className="homeAddButton">
+          <i
+            className="fa fa-heart-o"
+            aria-hidden="true"
+            onClick={addCityToLocalStorage}
+          ></i>
+          Add to favorites
+        </button>
       </div>
     </div>
   );
