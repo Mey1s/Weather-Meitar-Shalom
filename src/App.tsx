@@ -19,7 +19,7 @@ function App() {
       <Provider store={weatherAppStore}>
         <Layout>
           <Switch>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<NotFound />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="*" element={<NotFound />} />
           </Switch>

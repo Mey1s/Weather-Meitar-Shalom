@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { accuWeatherApiKey } from "../../../consts";
-import { fetchApiGet } from "../../../services/api";
+import { getFiveDaysForecasts } from "../../../services/api";
 import {
   DailyForecast,
   FiveDaysForecasts,
@@ -184,17 +183,16 @@ const FiveDaysWeather: React.FC<FiveDaysWeatherProps> = (props) => {
   );
 
   useEffect(() => {
-    getFiveDaysForecasts();
+    getNewFiveDaysForecasts();
   }, [props.cityLocationKey]);
 
-  const getFiveDaysForecasts = async () => {
+  const getNewFiveDaysForecasts = async () => {
     // const newFiveDaysForecasts: FiveDaysForecasts = await fetchApiGet(
     //   `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${props.cityLocationKey}?apiKey=${accuWeatherApiKey}`
     // );
-    const newFiveDaysForecasts: FiveDaysForecasts = await fetchApiGet(
-      "http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W&metric=true"
-    );
-    setFiveDaysForecasts(newFiveDaysForecasts);
+    getFiveDaysForecasts(props.cityLocationKey).then(newFiveDaysForecasts => {
+      setFiveDaysForecasts(newFiveDaysForecasts);
+    });
   };
 
   return (

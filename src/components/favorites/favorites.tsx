@@ -17,7 +17,6 @@ const Favorites: React.FC = () => {
     );
 
     if (currentFavorites) {
-      console.log(currentFavorites);
       setFavorites(currentFavorites);
     }
   };
@@ -30,6 +29,7 @@ const Favorites: React.FC = () => {
             key={i}
             cityName={favorite.LocalizedName}
             cityLocationKey={favorite.Key}
+            isInFavorites={true}
           />
         );
       })}

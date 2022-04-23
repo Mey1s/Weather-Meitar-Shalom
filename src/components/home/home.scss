@@ -3,7 +3,7 @@
 .homeContainer {
   width: 80%;
   margin: 0 auto;
-  min-height: 80vh;
+  min-height: 90vh;
 }
 
 .searchContainerHome {
@@ -15,7 +15,6 @@
   width: 200px;
   font-size: 1rem;
   background-color: transparent;
-  border-radius: 10px;
   border: 1px solid $lightPurple;
   padding-left: 10px;
   margin: 20px auto;
@@ -24,13 +23,15 @@
 
 .autocompleteHome {
   position: absolute;
-  bottom: 25px;
+  top: 34px;
+  left: 119px;
+  background-color: $white;
   width: fit-content;
   margin: 0 auto;
   border: 1px solid $lightPurple;
   border-top: none;
-  width: 210px;
-  height: 400px;
+  width: 212px;
+  height: 300px;
   overflow-y: scroll;
   height: fit-content;
 }
@@ -46,6 +47,6 @@
 }
 
 .itemListAutocompleteHome:hover {
-  background-color: $gray;
+  background-color: $lightGray;
   transition: all 0.3s ease;
 }

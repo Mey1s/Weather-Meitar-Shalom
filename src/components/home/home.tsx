@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { toast } from 'react-toastify';
-import { accuWeatherApiKey } from "../../consts";
-import { fetchApiGet } from "../../services/api";
+import { toast } from "react-toastify";
+import { getAutocompletes } from "../../services/api";
 import { Autocomplete } from "../../types/autocomplete";
 import CurrentWeather from "./currentWeather/currentWeather";
 import FiveDaysWeather from "./fiveDaysWeather/fiveDaysWeather";
@@ -15,21 +14,17 @@ const Home: React.FC = () => {
   const [cityName, setCityName] = useState("Tel Aviv");
 
   useEffect(() => {
-    getAutocomplete();
+    getNewAutocomplete();
   }, [searchQuery]);
 
-  const getAutocomplete = async () => {
+  const getNewAutocomplete = async () => {
     if (searchQuery !== "" && /^[a-zA-Z]+$/.test(searchQuery)) {
       // const newAutocompletes: Autocomplete[] = await fetchApiGet(
       //   `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apiKey=${accuWeatherApiKey}&q=${searchQuery}`
       // );
-      const newAutocompletes: Autocomplete[] = await fetchApiGet(
-       "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W&q=tel"
-      );
-      setAutoCompletes(newAutocompletes);
-    }
-    else{
-      toast.error("The search value must be in English!");
+      getAutocompletes(searchQuery).then((newAutocompletes) => {
+        setAutoCompletes(newAutocompletes);
+      });
     }
   };
 
@@ -64,7 +59,11 @@ const Home: React.FC = () => {
           </ul>
         </div>
       </div>
-      <CurrentWeather cityLocationKey={cityLocationKey} cityName={cityName} />
+      <CurrentWeather
+        cityLocationKey={cityLocationKey}
+        cityName={cityName}
+        isInFavorites={false}
+      />
       <FiveDaysWeather cityLocationKey={cityLocationKey} />
     </main>
   );

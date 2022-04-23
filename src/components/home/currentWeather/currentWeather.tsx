@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { accuWeatherApiKey } from "../../../consts";
 import { WeatherAppState } from "../../../redux/weather";
-import { fetchApiGet } from "../../../services/api";
+import { getCurrentCityWeather } from "../../../services/api";
 import {
   CurrentWeatherCondition,
   CurrentWeatherConditionExtanded,
@@ -13,9 +12,10 @@ import "./currentWeather.scss";
 interface CurrentWeatherProps {
   cityLocationKey: string;
   cityName: string;
+  isInFavorites: boolean;
 }
 
-const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
+const CurrentWeather: React.FC<CurrentWeatherProps> = (props: CurrentWeatherProps) => {
   const [currentWeatherCondition, setCurrentWeatherCondition] =
     useState<CurrentWeatherCondition>({
       LocalObservationDateTime: new Date(),
@@ -51,20 +51,26 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
       : currentWeatherCondition.Temperature.Imperial.Value.toFixed(2) + "F";
 
   useEffect(() => {
-    getCurrentWeatherCondition();
+    getNewCurrentWeatherCondition();
   }, [props.cityLocationKey]);
 
-  const getCurrentWeatherCondition = async () => {
-    // const newCurrentWeatherCondition: CurrentWeatherCondition[] =
-    //   await fetchApiGet(
-    //     `http://dataservice.accuweather.com/currentconditions/v1/${props.cityLocationKey}?apiKey=${accuWeatherApiKey}`
-    //   );
-    const newCurrentWeatherCondition: CurrentWeatherCondition[] =
-      await fetchApiGet(
-        "http://dataservice.accuweather.com/currentconditions/v1/215854?apikey=zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W"
-      );
-    setCurrentWeatherCondition(newCurrentWeatherCondition[0]);
+  const getNewCurrentWeatherCondition = async () => {
+  getCurrentCityWeather(props.cityLocationKey).then(
+      (newCurrentWeatherCondition) => {
+        setCurrentWeatherCondition(newCurrentWeatherCondition);
+      }
+    );
   };
+
+  const removeCityFromLocalStorage = () => {
+    const currentFavorites = JSON.parse(
+      String(localStorage.getItem("favorites"))
+    );
+    if(currentFavorites){
+      const newCurrentWeatherCondition = currentFavorites.filter((favorite: CurrentWeatherConditionExtanded)=> favorite.Key !== props.cityLocationKey);
+      localStorage.setItem("favorites", newCurrentWeatherCondition);
+    }
+  }
 
   const addCityToLocalStorage = () => {
     const currentFavorites = JSON.parse(
@@ -108,16 +114,20 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
     <div className="homeMainColumn">
       <div className="homeTopButtonsRow">
         <div className="homeTopButtonsLeft">
-          <i role="button" className="fa fa-times" aria-hidden="true"></i>
+          {props.isInFavorites && (
+            <i role="button" className="fa fa-times" aria-hidden="true" onClick={removeCityFromLocalStorage}></i>
+          )}
           <div className="homeDetails">
             <h4 className="homeDetailsHeader">{props.cityName}</h4>
             <p className="homeDetailsCelsius">{temperatore}</p>
           </div>
         </div>
-        <button className="homeAddButton" onClick={addCityToLocalStorage}>
-          <i className="fa fa-heart-o" aria-hidden="true"></i>
-          Add to favorites
-        </button>
+        {props.isInFavorites && (
+          <button className="homeAddButton" onClick={addCityToLocalStorage}>
+            <i className="fa fa-heart-o" aria-hidden="true"></i>
+            Add to favorites
+          </button>
+        )}
       </div>
     </div>
   );
