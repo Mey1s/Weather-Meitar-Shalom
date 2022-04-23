@@ -19,11 +19,10 @@ function App() {
       <Provider store={weatherAppStore}>
         <Layout>
           <Switch>
-            <Route path="/" element={<NotFound />} />
+            <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="*" element={<NotFound />} />
           </Switch>
-          <ToastContainer position="top-right" />
         </Layout>
       </Provider>
     </Router>

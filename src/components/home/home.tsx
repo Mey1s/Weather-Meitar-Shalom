@@ -19,9 +19,6 @@ const Home: React.FC = () => {
 
   const getNewAutocomplete = async () => {
     if (searchQuery !== "" && /^[a-zA-Z]+$/.test(searchQuery)) {
-      // const newAutocompletes: Autocomplete[] = await fetchApiGet(
-      //   `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apiKey=${accuWeatherApiKey}&q=${searchQuery}`
-      // );
       getAutocompletes(searchQuery).then((newAutocompletes) => {
         setAutoCompletes(newAutocompletes);
       });
@@ -34,7 +31,7 @@ const Home: React.FC = () => {
         <input
           className="searchInputHome"
           type="text"
-          placeholder="search"
+          placeholder="search city"
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <div

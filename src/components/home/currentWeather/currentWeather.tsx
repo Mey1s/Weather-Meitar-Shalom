@@ -15,7 +15,9 @@ interface CurrentWeatherProps {
   isInFavorites: boolean;
 }
 
-const CurrentWeather: React.FC<CurrentWeatherProps> = (props: CurrentWeatherProps) => {
+const CurrentWeather: React.FC<CurrentWeatherProps> = (
+  props: CurrentWeatherProps
+) => {
   const [currentWeatherCondition, setCurrentWeatherCondition] =
     useState<CurrentWeatherCondition>({
       LocalObservationDateTime: new Date(),
@@ -51,11 +53,14 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props: CurrentWeatherProp
       : currentWeatherCondition.Temperature.Imperial.Value.toFixed(2) + "F";
 
   useEffect(() => {
+    console.log(props.isInFavorites);
+  }, [props.isInFavorites]);
+  useEffect(() => {
     getNewCurrentWeatherCondition();
   }, [props.cityLocationKey]);
 
   const getNewCurrentWeatherCondition = async () => {
-  getCurrentCityWeather(props.cityLocationKey).then(
+    getCurrentCityWeather(props.cityLocationKey).then(
       (newCurrentWeatherCondition) => {
         setCurrentWeatherCondition(newCurrentWeatherCondition);
       }
@@ -66,11 +71,14 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props: CurrentWeatherProp
     const currentFavorites = JSON.parse(
       String(localStorage.getItem("favorites"))
     );
-    if(currentFavorites){
-      const newCurrentWeatherCondition = currentFavorites.filter((favorite: CurrentWeatherConditionExtanded)=> favorite.Key !== props.cityLocationKey);
+    if (currentFavorites) {
+      const newCurrentWeatherCondition = currentFavorites.filter(
+        (favorite: CurrentWeatherConditionExtanded) =>
+          favorite.Key !== props.cityLocationKey
+      );
       localStorage.setItem("favorites", newCurrentWeatherCondition);
     }
-  }
+  };
 
   const addCityToLocalStorage = () => {
     const currentFavorites = JSON.parse(
@@ -115,14 +123,19 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props: CurrentWeatherProp
       <div className="homeTopButtonsRow">
         <div className="homeTopButtonsLeft">
           {props.isInFavorites && (
-            <i role="button" className="fa fa-times" aria-hidden="true" onClick={removeCityFromLocalStorage}></i>
+            <i
+              role="button"
+              className="fa fa-times"
+              aria-hidden="true"
+              onClick={removeCityFromLocalStorage}
+            ></i>
           )}
           <div className="homeDetails">
             <h4 className="homeDetailsHeader">{props.cityName}</h4>
             <p className="homeDetailsCelsius">{temperatore}</p>
           </div>
         </div>
-        {props.isInFavorites && (
+        {!props.isInFavorites && (
           <button className="homeAddButton" onClick={addCityToLocalStorage}>
             <i className="fa fa-heart-o" aria-hidden="true"></i>
             Add to favorites

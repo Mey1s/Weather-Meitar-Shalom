@@ -1,9 +1,8 @@
-@import "../../colors.scss";
-
 .homeContainer {
+  background-color: var(--bkg2);
   width: 80%;
+  height: fit-content;
   margin: 0 auto;
-  min-height: 90vh;
 }
 
 .searchContainerHome {
@@ -12,25 +11,27 @@
 
 .searchInputHome {
   height: 30px;
-  width: 200px;
+  width: 180px;
+  max-width: 90%;
   font-size: 1rem;
   background-color: transparent;
-  border: 1px solid $lightPurple;
+  border: 1px solid var(--bkg1);
   padding-left: 10px;
-  margin: 20px auto;
+  margin: 20px 0;
   display: block;
 }
 
 .autocompleteHome {
   position: absolute;
   top: 34px;
-  left: 119px;
-  background-color: $white;
-  width: fit-content;
+  left: 0;
+  color: var(--text);
+  background-color: var(--bkg2);
   margin: 0 auto;
-  border: 1px solid $lightPurple;
+  border: 1px solid var(--bkg1);
   border-top: none;
-  width: 212px;
+  width: 192px;
+  max-width: 90%;
   height: 300px;
   overflow-y: scroll;
   height: fit-content;
@@ -47,6 +48,6 @@
 }
 
 .itemListAutocompleteHome:hover {
-  background-color: $lightGray;
-  transition: all 0.3s ease;
+  background-color: var(--bkg1);
+  transition: all 0.4s ease;
 }

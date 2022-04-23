@@ -1,7 +1,15 @@
 .dailyWeatherContainer {
-    border: 1px solid rgb(144, 144, 255);
+    border: 1px solid var(--bkg1);
+    color: var(--text);
     border-radius: 10px;
-    width: 150px;
+    width: 140px;
     text-align: center;
     margin-bottom: 10px;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.dailyWeatherContainer:hover {
+    transform: scale(1.1);
+    transition: all 0.5s ease;
 }

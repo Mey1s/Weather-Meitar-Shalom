@@ -1,9 +1,8 @@
-@import "../../../colors.scss";
-
 .homeMainColumn {
+    color: var(--text);
     display: flex;
     flex-direction: column;
-    border: 1px solid $lightPurple;
+    border: 1px solid var(--bkg1);
     border-radius: 10px;
     padding: 20px;
 }
@@ -28,8 +27,8 @@
 
 .homeAddButton {
     border: none;
-    background-color: $lightPurple;
-    color: $white;
+    background-color: var(--bkg1);
+    color: var(--text);
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 1rem;
@@ -41,14 +40,14 @@
 }
 
 .homeAddButton:hover {
-    background-color: $deepPurple;
-    color: $whiteGray;
+    background-color: var(--bkg2);
+    color: var(--accent1);
     transition: all 0.6s ease;
 }
 
 .homeMainHeader {
     text-align: center;
-    color: $lightPurple;
+    color: var(--text);
     margin-bottom: 100px;
     margin-top: 80px;
 }

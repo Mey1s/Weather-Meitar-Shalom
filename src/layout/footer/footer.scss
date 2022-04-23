@@ -1,9 +1,7 @@
-@import "../../colors.scss";
-
 .footerContainer {
-  background-color: $lightPurple;
-  color: $white;
-  min-height: 130px;
+  background-color: var(--bkg1);
+  color: var(--text);
+  height: 130px;
   margin-top: auto;
   padding: 0 0 5px 20px;
 }

@@ -1,8 +1,6 @@
-@import "../../colors.scss";
-
 .headerContainer {
-  background-color: $lightPurple;
-  color: $white;
-  min-height: 50px;
+  background-color: var(--bkg1);
+  color: var(--text);
+  height: 65px;
 }
 

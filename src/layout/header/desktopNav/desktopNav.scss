@@ -1,9 +1,8 @@
-@import "../../../colors.scss";
-
 .desktopNavHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 20px;
   }
   
   .navHeader,
@@ -19,7 +18,7 @@
   .itemListNavHeader {
     float: left;
     padding: 5px 10px;
-    border: 1px solid $white;
+    border: 1px solid var(--bkg2);
     cursor: pointer;
     margin-right: 5px;
   }
@@ -29,29 +28,41 @@
   }
   
   .itemListNavHeader:hover {
-    border: 1px solid $lightGray;
+    border: 1px solid var(--bkg2);
     transition: border 0.4s ease;
   }
   
   .itemListNavHeader:hover > a {
-    color: $lightGray;
+    color: var(--accent1);
     transition: color 0.4s ease;
   }
   
   .linkItemListNavHeader {
     text-decoration: none;
-    color: $white;
+    color: var(--text);
   }
   
   .temperatureUnitButton,
   .darkModeButton {
-    color: $lightPurple;
-    background-color: $white;
+    color: var(--text);
+    background-color: var(--bkg2);
     border-radius: 5px;
     border: none;
     padding: 5px 10px;
     width: 120px;
     cursor: pointer;
+  }
+
+  .temperatureUnitButton:active,
+  .darkModeButton:active {
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+  }
+
+  .temperatureUnitButton:hover i,
+  .darkModeButton:hover i {
+    transform: rotate(180deg);
+    transition: all 0.6s ease;
   }
   
   .darkModeButton {
