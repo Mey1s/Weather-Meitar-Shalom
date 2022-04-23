@@ -45,7 +45,7 @@
     }
   }
   
-  [color-scheme="dark"] {
+  [data-theme="dark"] {
     --text: var(--text-dark);
     --accent1: var(--accent1-dark);
     --accent2: var(--accent2-dark);
@@ -55,7 +55,7 @@
     --shadow: var(--shadow-dark);
   }
   
-  [color-scheme="light"] {
+  [data-theme="light"] {
     --text: var(--text-light);
     --accent1: var(--accent1-light);
     --accent2: var(--accent2-light);
