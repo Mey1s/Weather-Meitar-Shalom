@@ -1,9 +1,15 @@
 .favoritesRow {
   background-color: var(--bkg2);
   height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .favoritesTitle {
-    text-align: center;
-    margin: auto 0;
+  width: fit-content;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
 }

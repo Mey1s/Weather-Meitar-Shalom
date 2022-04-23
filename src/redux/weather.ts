@@ -1,39 +1,44 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { celciusSign, fahrenheitSign } from "../consts";
 
 const weatherAppSlice = createSlice({
   name: "weatherApp",
   initialState: {
     darkMode: false,
-    temperatureUnit: "C",
+    temperatureUnit: celciusSign,
     selectedCityKey: "215854",
-    selectedCityName: "Tel Aviv"
+    selectedCityName: "Tel Aviv",
   },
   reducers: {
     toggleDarkmode: (state) => {
       state.darkMode = !state.darkMode;
     },
     changeTemperatureUnit: (state) => {
-      state.temperatureUnit = state.temperatureUnit === "C" ? "F" : "C";
+      state.temperatureUnit = state.temperatureUnit === celciusSign ? fahrenheitSign : celciusSign;
     },
-    changeSelectedCityKey: (state, actions) => {
-      console.log(actions.payload);
-      state.selectedCityKey = actions.payload;
+    changeSelectedCityKey: (state, {payload}) => {
+      state.selectedCityKey = payload;
     },
-    changeSelectedCityName: (state, actions) => {
-      console.log(actions.payload);
-      state.selectedCityName = actions.payload;
-    }
+    changeSelectedCityName: (state, {payload}) => {
+      state.selectedCityName = payload;
+    },
   },
 });
 
-export const { toggleDarkmode, changeTemperatureUnit, changeSelectedCityKey, changeSelectedCityName } =
-  weatherAppSlice.actions;
+export const {
+  toggleDarkmode,
+  changeTemperatureUnit,
+  changeSelectedCityKey,
+  changeSelectedCityName,
+} = weatherAppSlice.actions;
 
 export const weatherAppStore = configureStore({
   reducer: weatherAppSlice.reducer,
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type WeatherAppState = ReturnType<typeof weatherAppStore.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type WeatherAppDispatch = typeof weatherAppStore.dispatch;
+export type WeatherAppState = ReturnType<typeof weatherAppStore.getState>;
+export const useWeatherAppDispatch = () => useDispatch<WeatherAppDispatch>();
+export const useWeatherAppSelector: TypedUseSelectorHook<WeatherAppState> =
+  useSelector;

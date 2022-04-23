@@ -1,29 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  weatherAppStore,
-  WeatherAppState,
-  toggleDarkmode,
-  changeTemperatureUnit,
-} from "../../../redux/weather";
+import * as weather from "../../../redux/weather";
+import { NavItem } from "../../../types/navItem";
+import { celciusSign, fahrenheitSign, navItems } from "../../../consts";
 
 import "./desktopNav.scss";
-import { NavItem } from "../../../types/navItem";
-import { navItems } from "../../../consts";
 
 const DesktopNav: React.FC = () => {
-  const darkMode = useSelector((state: WeatherAppState) => state.darkMode);
-  const temperatureUnit = useSelector(
-    (state: WeatherAppState) => state.temperatureUnit
+  const { darkMode, temperatureUnit } = useSelector(
+    (state: weather.WeatherAppState) => state
   );
 
+  // Update dark mode state
   const onDarkModeButtonClicked = () => {
-    weatherAppStore.dispatch(toggleDarkmode());
+    weather.weatherAppStore.dispatch(weather.toggleDarkmode());
   };
 
+  // Update temperature unit state
   const onTemperatureUnitButtonClicked = () => {
-    weatherAppStore.dispatch(changeTemperatureUnit());
+    weather.weatherAppStore.dispatch(weather.changeTemperatureUnit());
   };
 
   return (
@@ -43,6 +39,7 @@ const DesktopNav: React.FC = () => {
       </nav>
       <div className="headerButtons">
         <button className="darkModeButton" onClick={onDarkModeButtonClicked}>
+          {/* Switch between dark and light themes */}
           {darkMode ? (
             <span>
               <i className="fa fa-sun-o" aria-hidden="true"></i> Light Mode
@@ -59,7 +56,10 @@ const DesktopNav: React.FC = () => {
         >
           <span>
             <i className="fa fa-thermometer-empty" aria-hidden="true"></i>
-            {temperatureUnit === "C" ? " Change to F" : " Change to C"}
+            {/* Switch between celsius and fahrenheit degrees */}
+            {temperatureUnit === celciusSign
+              ? ` Change to ${fahrenheitSign}`
+              : ` Change to ${celciusSign}`}
           </span>
         </button>
       </div>

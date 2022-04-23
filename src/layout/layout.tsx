@@ -10,12 +10,13 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = (props) => {
-  const darkMode = useSelector((state: WeatherAppState) => state.darkMode);
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { darkMode } = useSelector((state: WeatherAppState) => state);
   return (
+    // Detect if the mode is dark or light and changes the theme
     <div className="layoutContainer" data-theme={darkMode ? "dark" : "light"}>
       <Header />
-      {props.children}
+      {children}
       <Footer />
     </div>
   );

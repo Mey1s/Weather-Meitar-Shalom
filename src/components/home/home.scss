@@ -1,8 +1,10 @@
 .homeContainer {
   background-color: var(--bkg2);
-  width: 80%;
   height: fit-content;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .searchContainerHome {
@@ -11,8 +13,8 @@
 
 .searchInputHome {
   height: 30px;
-  width: 180px;
-  max-width: 90%;
+  width: 150px;
+  max-width: 90;
   font-size: 1rem;
   background-color: transparent;
   border: 1px solid var(--bkg1);
@@ -23,18 +25,16 @@
 
 .autocompleteHome {
   position: absolute;
-  top: 34px;
+  top: 54px;
   left: 0;
   color: var(--text);
   background-color: var(--bkg2);
   margin: 0 auto;
   border: 1px solid var(--bkg1);
   border-top: none;
-  width: 192px;
-  max-width: 90%;
-  height: 300px;
+  width: 162px;
+  height: 200px;
   overflow-y: scroll;
-  height: fit-content;
 }
 
 .listAutocompleteHome {

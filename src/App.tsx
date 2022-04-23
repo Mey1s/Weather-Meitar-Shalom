@@ -1,32 +1,26 @@
-import React from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes as Switch,
-} from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import "./App.scss";
 import Favorites from "./components/favorites/favorites";
 import Home from "./components/home/home";
 import Layout from "./layout/layout";
 import { weatherAppStore } from "./redux/weather";
 import NotFound from "./components/notFound/notFound";
+import "./App.scss";
 
-function App() {
+const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Provider store={weatherAppStore}>
         <Layout>
-          <Switch>
+          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="*" element={<NotFound />} />
-          </Switch>
+          </Routes>
         </Layout>
       </Provider>
-    </Router>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

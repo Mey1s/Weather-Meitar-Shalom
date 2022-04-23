@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { localStorageFavorites } from "../../consts";
 import { CurrentWeatherConditionExtanded } from "../../types/currentWeatherCondition";
 import CurrentWeather from "../home/currentWeather/currentWeather";
-
 import "./favorites.scss";
 
-const Favorites: React.FC = () => {
+const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const Favorites: React.FC = () => {
 
   const getFavoritesFromLocalStorage = () => {
     const currentFavorites = JSON.parse(
-      String(localStorage.getItem("favorites"))
+      String(localStorage.getItem(localStorageFavorites))
     );
 
     if (currentFavorites) {
@@ -23,10 +23,14 @@ const Favorites: React.FC = () => {
 
   return (
     <main className="favoritesRow">
-      {
-        favorites.length === 0 &&
-        <h1 className="favoritesTitle">You have'nt saved favorite cities yet</h1>
-      }
+      {/* If there is no favorites */}
+      {favorites.length === 0 && (
+        <h1 className="favoritesTitle">
+          You have'nt saved favorite cities yet
+        </h1>
+      )}
+
+      {/* display all favorite cities */}
       {favorites.map((favorite: CurrentWeatherConditionExtanded, i) => {
         return (
           <CurrentWeather
@@ -34,6 +38,7 @@ const Favorites: React.FC = () => {
             cityName={favorite.LocalizedName}
             cityLocationKey={favorite.Key}
             isInFavorites={true}
+            getFavoritesFromLocalStorage={getFavoritesFromLocalStorage}
           />
         );
       })}

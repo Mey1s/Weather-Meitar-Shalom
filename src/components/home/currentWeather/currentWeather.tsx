@@ -1,120 +1,134 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { currentWeatherInitial } from "../../../consts";
-import {
-  WeatherAppState,
-  changeSelectedCityKey,
-  changeSelectedCityName,
-  weatherAppStore,
-} from "../../../redux/weather";
+import { celciusSign, currentWeatherInitial, fahrenheitSign, localStorageFavorites } from "../../../consts";
+import * as weather from "../../../redux/weather";
 import { getCurrentCityWeather } from "../../../services/api";
 import {
   CurrentWeatherCondition,
   CurrentWeatherConditionExtanded,
 } from "../../../types/currentWeatherCondition";
-
 import "./currentWeather.scss";
 
 interface CurrentWeatherProps {
   cityLocationKey: string;
   cityName: string;
+  // to detect if it's from favorites components or not
   isInFavorites: boolean;
+  getFavoritesFromLocalStorage?: Function;
 }
 
-const CurrentWeather: React.FC<CurrentWeatherProps> = (
-  props: CurrentWeatherProps
-) => {
+const CurrentWeather = ({
+  cityLocationKey,
+  cityName,
+  isInFavorites,
+  getFavoritesFromLocalStorage,
+}: CurrentWeatherProps) => {
   const navigate = useNavigate();
   const [currentWeatherCondition, setCurrentWeatherCondition] =
     useState<CurrentWeatherCondition>(currentWeatherInitial);
-  const temperatureUnit = useSelector(
-    (state: WeatherAppState) => state.temperatureUnit
+  const { temperatureUnit, selectedCityKey, selectedCityName } = useSelector(
+    (state: weather.WeatherAppState) => state
   );
 
+  // Calculate temperatore
   const temperatore =
-    temperatureUnit === "C"
-      ? currentWeatherCondition.Temperature.Metric.Value.toFixed(2) + "C"
-      : currentWeatherCondition.Temperature.Imperial.Value.toFixed(2) + "F";
+    temperatureUnit === celciusSign
+      ? `${currentWeatherCondition.Temperature.Metric.Value.toFixed(0)}${celciusSign}`
+      : `${currentWeatherCondition.Temperature.Imperial.Value.toFixed(0)}${fahrenheitSign}`;
 
-  useEffect(() => {
-    console.log(props.isInFavorites);
-  }, [props.isInFavorites]);
   useEffect(() => {
     getNewCurrentWeatherCondition();
-  }, [props.cityLocationKey]);
+  }, [
+    cityLocationKey,
+    cityName,
+    isInFavorites,
+    selectedCityName,
+    selectedCityKey,
+  ]);
 
+  // Get current city weather condition
   const getNewCurrentWeatherCondition = async () => {
-    getCurrentCityWeather(props.cityLocationKey).then(
+    getCurrentCityWeather(cityLocationKey).then(
       (newCurrentWeatherCondition) => {
         setCurrentWeatherCondition(newCurrentWeatherCondition);
       }
     );
   };
 
+  // Remove city from local storage
   const removeCityFromLocalStorage = () => {
     const currentFavorites = JSON.parse(
-      String(localStorage.getItem("favorites"))
+      String(localStorage.getItem(localStorageFavorites))
     );
-    console.log(currentFavorites);
     if (currentFavorites) {
+      // Remove the item by key
       const newCurrentWeatherCondition = currentFavorites.filter(
         (favorite: CurrentWeatherConditionExtanded) =>
-          favorite.Key !== props.cityLocationKey
+          favorite.Key !== cityLocationKey
       );
-      console.log(newCurrentWeatherCondition);
-      localStorage.setItem("favorites", JSON.stringify(newCurrentWeatherCondition));
+      localStorage.setItem(
+        localStorageFavorites,
+        JSON.stringify(newCurrentWeatherCondition)
+      );
+      
+      getFavoritesFromLocalStorage &&  getFavoritesFromLocalStorage();
+        
     }
   };
 
+  //add city to local storage
   const addCityToLocalStorage = () => {
     const currentFavorites = JSON.parse(
-      String(localStorage.getItem("favorites"))
+      String(localStorage.getItem(localStorageFavorites))
     );
 
     if (!currentFavorites) {
       localStorage.setItem(
-        "favorites",
+        localStorageFavorites,
         JSON.stringify([
           {
             ...currentWeatherCondition,
-            LocalizedName: props.cityName,
-            Key: props.cityLocationKey,
+            LocalizedName: cityName,
+            Key: cityLocationKey,
           },
         ])
       );
     } else {
       currentFavorites.map((city: CurrentWeatherConditionExtanded) => {
-        if (city.Key === props.cityLocationKey) {
-          throw alert(`You have already added ${props.cityName}`);
+        if (city.Key === cityLocationKey) {
+          throw alert(`You have already added ${cityName}`);
         }
       });
 
       localStorage.setItem(
-        "favorites",
+        localStorageFavorites,
         JSON.stringify([
           ...currentFavorites,
           {
             ...currentWeatherCondition,
-            LocalizedName: props.cityName,
-            Key: props.cityLocationKey,
+            LocalizedName: cityName,
+            Key: cityLocationKey,
           },
         ])
       );
     }
   };
 
+  //update selected city key
   const updateSelectedCityKey = () => {
-    weatherAppStore.dispatch(changeSelectedCityKey(props.cityLocationKey));
-    weatherAppStore.dispatch(changeSelectedCityName(props.cityName));
+    weather.weatherAppStore.dispatch(
+      weather.changeSelectedCityKey(cityLocationKey)
+    );
+    weather.weatherAppStore.dispatch(weather.changeSelectedCityName(cityName));
     navigate("/");
   };
 
   return (
     <div className="homeMainColumn">
       <div className="homeTopButtonsRow">
-        <div className="homeTopButtonsLeft" onClick={updateSelectedCityKey}>
-          {props.isInFavorites && (
+        <div className="homeTopButtonsLeft">
+          {isInFavorites && (
             <i
               role="button"
               className="fa fa-times"
@@ -123,11 +137,11 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (
             ></i>
           )}
           <div className="homeDetails">
-            <h4 className="homeDetailsHeader">{props.cityName}</h4>
-            <p className="homeDetailsCelsius">{temperatore}</p>
+            <h4 className="homeDetailsHeader" onClick={updateSelectedCityKey}>{cityName}</h4>
+            <p className="homeDetailsCelsius">{temperatore}&deg;</p>
           </div>
         </div>
-        {!props.isInFavorites && (
+        {!isInFavorites && (
           <button className="homeAddButton" onClick={addCityToLocalStorage}>
             <i className="fa fa-heart-o" aria-hidden="true"></i>
             Add to favorites

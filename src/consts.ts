@@ -1,15 +1,22 @@
 import { NavItem } from "./types/navItem";
 
-//accuWeather
-export const accuWeatherApiKey = "zMNPiORpciVYF0n5Z12HKGjPIPsxnW9W";
+// AccuWeather
+export const accuWeatherApiKey = process.env.REACT_APP_ACCUWEATHER;
 
-//nav items
+// Nav items
 export const navItems: NavItem[] = [
   { title: "Home", link: "/" },
   { title: "Favorites", link: "/favorites" },
 ];
 
-//initial values
+// LocalStorage
+export const localStorageFavorites = "favorites";
+
+// Degrees
+export const celciusSign = "C";
+export const fahrenheitSign = "F";
+
+// Initial values
 export const currentWeatherInitial = {
   LocalObservationDateTime: new Date(),
   EpochTime: 0,
@@ -30,12 +37,11 @@ export const currentWeatherInitial = {
       UnitType: 0,
     },
   },
-  MobileLink:
-    "",
+  MobileLink: "",
   Link: "",
 };
 
-export const fiveDaysForecastsInitial =     {
+export const fiveDaysForecastsInitial = {
   Headline: {
     EffectiveDate: new Date(),
     EffectiveEpochDate: 0,
@@ -44,8 +50,7 @@ export const fiveDaysForecastsInitial =     {
     Category: "",
     EndDate: new Date(),
     EndEpochDate: 0,
-    MobileLink:
-      "",
+    MobileLink: "",
     Link: "",
   },
   DailyForecasts: [
@@ -75,8 +80,7 @@ export const fiveDaysForecastsInitial =     {
         HasPrecipitation: false,
       },
       Sources: [""],
-      MobileLink:
-        "",
+      MobileLink: "",
       Link: "",
     },
     {
@@ -105,8 +109,7 @@ export const fiveDaysForecastsInitial =     {
         HasPrecipitation: false,
       },
       Sources: [""],
-      MobileLink:
-        "",
+      MobileLink: "",
       Link: "",
     },
     {
@@ -135,8 +138,7 @@ export const fiveDaysForecastsInitial =     {
         HasPrecipitation: false,
       },
       Sources: [""],
-      MobileLink:
-        "",
+      MobileLink: "",
       Link: "",
     },
     {
@@ -165,8 +167,7 @@ export const fiveDaysForecastsInitial =     {
         HasPrecipitation: false,
       },
       Sources: [""],
-      MobileLink:
-        "",
+      MobileLink: "",
       Link: "",
     },
     {
@@ -195,8 +196,7 @@ export const fiveDaysForecastsInitial =     {
         HasPrecipitation: false,
       },
       Sources: [""],
-      MobileLink:
-        "",
+      MobileLink: "",
       Link: "",
     },
   ],

@@ -1,37 +1,38 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  WeatherAppState,
-  changeSelectedCityName,
-  changeSelectedCityKey,
-  weatherAppStore,
-} from "../../redux/weather";
+import * as weather from "../../redux/weather";
 import { getAutocompletes } from "../../services/api";
 import { Autocomplete } from "../../types/autocomplete";
 import CurrentWeather from "./currentWeather/currentWeather";
 import FiveDaysWeather from "./fiveDaysWeather/fiveDaysWeather";
-
 import "./home.scss";
 
-const Home: React.FC = () => {
-  const selectedCityKey = useSelector(
-    (state: WeatherAppState) => state.selectedCityKey
+const Home = () => {
+  const searchCityInputRef =
+    useRef() as React.MutableRefObject<HTMLInputElement>;
+  const { selectedCityKey, selectedCityName } = useSelector(
+    (state: weather.WeatherAppState) => state
   );
-  const selectedCityName = useSelector(
-    (state: WeatherAppState) => state.selectedCityName
-  );
-  const [searchQuery, setSearchQuery] = useState("");
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [autocompletes, setAutoCompletes] = useState<Autocomplete[]>([]);
+  const [showAutoCompleteMenu, setShowAutoCompleteMenu] =
+    useState<boolean>(false);
 
   useEffect(() => {
     getNewAutocomplete();
   }, [searchQuery]);
 
+  //get autocomplete list
   const getNewAutocomplete = async () => {
+    //check if the search query is not empty and in English
     if (searchQuery !== "" && /^[a-zA-Z]+$/.test(searchQuery)) {
+      setShowAutoCompleteMenu(true);
       getAutocompletes(searchQuery).then((newAutocompletes) => {
         setAutoCompletes(newAutocompletes);
       });
+    } else {
+      setShowAutoCompleteMenu(false);
     }
   };
 
@@ -39,6 +40,8 @@ const Home: React.FC = () => {
     <main className="homeContainer">
       <div className="searchContainerHome">
         <input
+          ref={searchCityInputRef}
+          value={searchQuery}
           className="searchInputHome"
           type="text"
           placeholder="search city"
@@ -46,7 +49,7 @@ const Home: React.FC = () => {
         />
         <div
           className="autocompleteHome"
-          style={{ display: searchQuery.length > 0 ? "block" : "none" }}
+          style={{ display: showAutoCompleteMenu ? "block" : "none" }}
         >
           <ul className="listAutocompleteHome">
             {autocompletes.map((autocomplete, i) => {
@@ -54,9 +57,16 @@ const Home: React.FC = () => {
                 <li
                   key={i}
                   className="itemListAutocompleteHome"
+                  // on click update the city name and key and reset search query
                   onClick={() => {
-                    weatherAppStore.dispatch(changeSelectedCityKey(autocomplete.Key));
-                    weatherAppStore.dispatch(changeSelectedCityName(autocomplete.LocalizedName));
+                    weather.weatherAppStore.dispatch(
+                      weather.changeSelectedCityKey(autocomplete.Key)
+                    );
+                    weather.weatherAppStore.dispatch(
+                      weather.changeSelectedCityName(autocomplete.LocalizedName)
+                    );
+                    setSearchQuery(autocomplete.LocalizedName);
+                    setShowAutoCompleteMenu(false);
                   }}
                 >
                   {autocomplete.LocalizedName}
