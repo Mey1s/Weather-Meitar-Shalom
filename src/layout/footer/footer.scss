@@ -1,7 +1,9 @@
-@import url("../../colors.scss");
+@import "../../colors.scss";
 
 .footerContainer {
-    background-color: $lightPurple;
-    color: $white;
-    min-height: 10vh;
+  background-color: $lightPurple;
+  color: $white;
+  min-height: 130px;
+  margin-top: auto;
+  padding: 0 0 5px 20px;
 }

@@ -4,8 +4,8 @@ import "./notFound.scss";
 
 const NotFound = () => {
   return (
-    <main>
-      <h1>404 Page has not found</h1>
+    <main className="notFoundContainer">
+      <h1 className="notFoundTitle">404 Page has not found</h1>
     </main>
   );
 };

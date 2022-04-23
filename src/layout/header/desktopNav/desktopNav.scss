@@ -1,0 +1,65 @@
+@import "../../../colors.scss";
+
+.desktopNavHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navHeader,
+  .headerButtons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .listNavHeader {
+    list-style-type: none;
+  }
+  
+  .itemListNavHeader {
+    float: left;
+    padding: 5px 10px;
+    border: 1px solid $white;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .itemListNavHeader:last-child {
+    margin-right: none;
+  }
+  
+  .itemListNavHeader:hover {
+    border: 1px solid $lightGray;
+    transition: border 0.4s ease;
+  }
+  
+  .itemListNavHeader:hover > a {
+    color: $lightGray;
+    transition: color 0.4s ease;
+  }
+  
+  .linkItemListNavHeader {
+    text-decoration: none;
+    color: $white;
+  }
+  
+  .temperatureUnitButton,
+  .darkModeButton {
+    color: $lightPurple;
+    background-color: $white;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    width: 120px;
+    cursor: pointer;
+  }
+  
+  .darkModeButton {
+    margin-right: 10px;
+  }
+  
+  @media screen and (max-width: 700px) {
+    .desktopNavHeader {
+        display: none;
+    }
+}
