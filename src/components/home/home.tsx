@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import {
+  WeatherAppState,
+  changeSelectedCityName,
+  changeSelectedCityKey,
+  weatherAppStore,
+} from "../../redux/weather";
 import { getAutocompletes } from "../../services/api";
 import { Autocomplete } from "../../types/autocomplete";
 import CurrentWeather from "./currentWeather/currentWeather";
@@ -8,10 +14,14 @@ import FiveDaysWeather from "./fiveDaysWeather/fiveDaysWeather";
 import "./home.scss";
 
 const Home: React.FC = () => {
+  const selectedCityKey = useSelector(
+    (state: WeatherAppState) => state.selectedCityKey
+  );
+  const selectedCityName = useSelector(
+    (state: WeatherAppState) => state.selectedCityName
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [autocompletes, setAutoCompletes] = useState<Autocomplete[]>([]);
-  const [cityLocationKey, setCityLocationKey] = useState("215854");
-  const [cityName, setCityName] = useState("Tel Aviv");
 
   useEffect(() => {
     getNewAutocomplete();
@@ -45,8 +55,8 @@ const Home: React.FC = () => {
                   key={i}
                   className="itemListAutocompleteHome"
                   onClick={() => {
-                    setCityLocationKey(autocomplete.Key);
-                    setCityName(autocomplete.LocalizedName);
+                    weatherAppStore.dispatch(changeSelectedCityKey(autocomplete.Key));
+                    weatherAppStore.dispatch(changeSelectedCityName(autocomplete.LocalizedName));
                   }}
                 >
                   {autocomplete.LocalizedName}
@@ -57,11 +67,11 @@ const Home: React.FC = () => {
         </div>
       </div>
       <CurrentWeather
-        cityLocationKey={cityLocationKey}
-        cityName={cityName}
+        cityLocationKey={selectedCityKey}
+        cityName={selectedCityName}
         isInFavorites={false}
       />
-      <FiveDaysWeather cityLocationKey={cityLocationKey} />
+      <FiveDaysWeather cityLocationKey={selectedCityKey} />
     </main>
   );
 };

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { WeatherAppState } from "../../../redux/weather";
+import { useNavigate } from "react-router-dom";
+import { currentWeatherInitial } from "../../../consts";
+import {
+  WeatherAppState,
+  changeSelectedCityKey,
+  changeSelectedCityName,
+  weatherAppStore,
+} from "../../../redux/weather";
 import { getCurrentCityWeather } from "../../../services/api";
 import {
   CurrentWeatherCondition,
@@ -18,31 +25,9 @@ interface CurrentWeatherProps {
 const CurrentWeather: React.FC<CurrentWeatherProps> = (
   props: CurrentWeatherProps
 ) => {
+  const navigate = useNavigate();
   const [currentWeatherCondition, setCurrentWeatherCondition] =
-    useState<CurrentWeatherCondition>({
-      LocalObservationDateTime: new Date(),
-      EpochTime: 1650636780,
-      WeatherText: "Cloudy",
-      WeatherIcon: 7,
-      HasPrecipitation: false,
-      PrecipitationType: null,
-      IsDayTime: true,
-      Temperature: {
-        Metric: {
-          Value: 20.6,
-          Unit: "C",
-          UnitType: 17,
-        },
-        Imperial: {
-          Value: 69,
-          Unit: "F",
-          UnitType: 18,
-        },
-      },
-      MobileLink:
-        "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us",
-      Link: "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us",
-    });
+    useState<CurrentWeatherCondition>(currentWeatherInitial);
   const temperatureUnit = useSelector(
     (state: WeatherAppState) => state.temperatureUnit
   );
@@ -71,12 +56,14 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (
     const currentFavorites = JSON.parse(
       String(localStorage.getItem("favorites"))
     );
+    console.log(currentFavorites);
     if (currentFavorites) {
       const newCurrentWeatherCondition = currentFavorites.filter(
         (favorite: CurrentWeatherConditionExtanded) =>
           favorite.Key !== props.cityLocationKey
       );
-      localStorage.setItem("favorites", newCurrentWeatherCondition);
+      console.log(newCurrentWeatherCondition);
+      localStorage.setItem("favorites", JSON.stringify(newCurrentWeatherCondition));
     }
   };
 
@@ -99,7 +86,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (
     } else {
       currentFavorites.map((city: CurrentWeatherConditionExtanded) => {
         if (city.Key === props.cityLocationKey) {
-          return alert(`You have already added ${props.cityName}`);
+          throw alert(`You have already added ${props.cityName}`);
         }
       });
 
@@ -107,7 +94,6 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (
         "favorites",
         JSON.stringify([
           ...currentFavorites,
-          ,
           {
             ...currentWeatherCondition,
             LocalizedName: props.cityName,
@@ -118,10 +104,16 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (
     }
   };
 
+  const updateSelectedCityKey = () => {
+    weatherAppStore.dispatch(changeSelectedCityKey(props.cityLocationKey));
+    weatherAppStore.dispatch(changeSelectedCityName(props.cityName));
+    navigate("/");
+  };
+
   return (
     <div className="homeMainColumn">
       <div className="homeTopButtonsRow">
-        <div className="homeTopButtonsLeft">
+        <div className="homeTopButtonsLeft" onClick={updateSelectedCityKey}>
           {props.isInFavorites && (
             <i
               role="button"

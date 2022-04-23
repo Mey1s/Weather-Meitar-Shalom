@@ -5,6 +5,8 @@ const weatherAppSlice = createSlice({
   initialState: {
     darkMode: false,
     temperatureUnit: "C",
+    selectedCityKey: "215854",
+    selectedCityName: "Tel Aviv"
   },
   reducers: {
     toggleDarkmode: (state) => {
@@ -13,10 +15,18 @@ const weatherAppSlice = createSlice({
     changeTemperatureUnit: (state) => {
       state.temperatureUnit = state.temperatureUnit === "C" ? "F" : "C";
     },
+    changeSelectedCityKey: (state, actions) => {
+      console.log(actions.payload);
+      state.selectedCityKey = actions.payload;
+    },
+    changeSelectedCityName: (state, actions) => {
+      console.log(actions.payload);
+      state.selectedCityName = actions.payload;
+    }
   },
 });
 
-export const { toggleDarkmode, changeTemperatureUnit } =
+export const { toggleDarkmode, changeTemperatureUnit, changeSelectedCityKey, changeSelectedCityName } =
   weatherAppSlice.actions;
 
 export const weatherAppStore = configureStore({
@@ -27,5 +37,3 @@ export const weatherAppStore = configureStore({
 export type WeatherAppState = ReturnType<typeof weatherAppStore.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type WeatherAppDispatch = typeof weatherAppStore.dispatch;
-
-// store.dispatch(toggleDarkmode());

@@ -8,8 +8,6 @@ const Footer: React.FC = () => {
       <h4>
         <i className="fa fa-copyright" aria-hidden="true"></i> Meitar Shalom
       </h4>
-      <p>Email: meytar733@gmail.com</p>
-      <p>Phone: 0526621819</p>
     </footer>
   );
 };

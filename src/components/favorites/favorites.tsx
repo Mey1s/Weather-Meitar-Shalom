@@ -24,7 +24,7 @@ const Favorites: React.FC = () => {
   return (
     <main className="favoritesRow">
       {
-        !favorites &&
+        favorites.length === 0 &&
         <h1 className="favoritesTitle">You have'nt saved favorite cities yet</h1>
       }
       {favorites.map((favorite: CurrentWeatherConditionExtanded, i) => {
