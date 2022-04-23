@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { accuWeatherApiKey } from "../../../consts";
 import { WeatherAppState } from "../../../redux/weather";
 import { fetchApiGet } from "../../../services/api";
-import { fahrenheitToCelsius } from "../../../services/degress";
-import { CurrentWeatherCondition } from "../../../types/currentWeatherCondition";
+import {
+  CurrentWeatherCondition,
+  CurrentWeatherConditionExtanded,
+} from "../../../types/currentWeatherCondition";
 
-import "./currentWeather.css";
+import "./currentWeather.scss";
 
 interface CurrentWeatherProps {
   cityLocationKey: string;
@@ -45,8 +47,8 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
 
   const temperatore =
     temperatureUnit === "C"
-      ? currentWeatherCondition.Temperature.Metric.Value
-      : currentWeatherCondition.Temperature.Imperial.Value;
+      ? currentWeatherCondition.Temperature.Metric.Value.toFixed(2) + "C"
+      : currentWeatherCondition.Temperature.Imperial.Value.toFixed(2) + "F";
 
   useEffect(() => {
     getCurrentWeatherCondition();
@@ -81,7 +83,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
         ])
       );
     } else {
-      currentFavorites.map((city: any) => {
+      currentFavorites.map((city: CurrentWeatherConditionExtanded) => {
         if (city.Key === props.cityLocationKey) {
           return alert(`You have already added ${props.cityName}`);
         }
@@ -112,12 +114,8 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = (props) => {
             <p className="homeDetailsCelsius">{temperatore}</p>
           </div>
         </div>
-        <button className="homeAddButton">
-          <i
-            className="fa fa-heart-o"
-            aria-hidden="true"
-            onClick={addCityToLocalStorage}
-          ></i>
+        <button className="homeAddButton" onClick={addCityToLocalStorage}>
+          <i className="fa fa-heart-o" aria-hidden="true"></i>
           Add to favorites
         </button>
       </div>

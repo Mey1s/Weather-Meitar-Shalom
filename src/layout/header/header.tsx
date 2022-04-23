@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./header.css";
+import "./header.scss";
 import {
   weatherAppStore,
   WeatherAppState,
@@ -15,7 +15,7 @@ interface NavItemI {
   link: string;
 }
 
-const Header = () => {
+const Header: React.FC = () => {
   const darkMode = useSelector((state: WeatherAppState) => state.darkMode);
   const temperatureUnit = useSelector(
     (state: WeatherAppState) => state.temperatureUnit
@@ -66,7 +66,7 @@ const Header = () => {
           onClick={onTemperatureUnitButtonClicked}
         >
           <span>
-            <i className="fa fa-thermometer-empty" aria-hidden="true"></i> 
+            <i className="fa fa-thermometer-empty" aria-hidden="true"></i>
             {temperatureUnit === "C" ? " Change to F" : " Change to C"}
           </span>
         </button>

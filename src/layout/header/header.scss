@@ -1,10 +1,12 @@
+@import url("../../colors.scss");
+
 .headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: rgb(144, 144, 255);
-    color: white;
+    background-color: $lightPurple;
+    color: $white;
     min-height: 10vh;
 }
 
@@ -15,7 +17,7 @@
 .itemListNavHeader {
     float: left;
     padding: 5px 10px;
-    border: 1px solid white;
+    border: 1px solid $white;
     cursor: pointer;
     margin-right: 5px;
 }
@@ -25,27 +27,28 @@
 }
 
 .itemListNavHeader:hover {
-    border: 1px solid rgb(182, 182, 182);
+    border: 1px solid $lightGray;
     transition: border 0.4s ease;
 }
 
 .itemListNavHeader:hover > a {
-    color: rgb(182, 182, 182);
+    color: $lightGray;
     transition: color 0.4s ease;
 }
 
 .linkItemListNavHeader {
     text-decoration: none;
-    color: white;
+    color: $white;
 }
 
 .temperatureUnitButton, .darkModeButton {
-    color: rgb(144, 144, 255);
-    background-color: #fff;
+    color: $lightPurple;
+    background-color: $white;
     border-radius: 5px;
     border: none;
     padding: 5px 10px;
     width: 120px;
+    cursor: pointer;
 }
 
 .darkModeButton {

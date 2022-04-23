@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { CurrentWeatherConditionExtanded } from "../../types/currentWeatherCondition";
 import CurrentWeather from "../home/currentWeather/currentWeather";
 
-import "./favorites.css";
+import "./favorites.scss";
 
 const Favorites: React.FC = () => {
   const [favorites, setFavorites] = useState([]);
@@ -12,17 +13,18 @@ const Favorites: React.FC = () => {
 
   const getFavoritesFromLocalStorage = () => {
     const currentFavorites = JSON.parse(
-      localStorage.getItem("favorites") || ""
+      String(localStorage.getItem("favorites"))
     );
 
     if (currentFavorites) {
+      console.log(currentFavorites);
       setFavorites(currentFavorites);
     }
   };
 
   return (
     <main className="favoritesRow">
-      {favorites.map((favorite: any, i) => {
+      {favorites.map((favorite: CurrentWeatherConditionExtanded, i) => {
         return (
           <CurrentWeather
             key={i}

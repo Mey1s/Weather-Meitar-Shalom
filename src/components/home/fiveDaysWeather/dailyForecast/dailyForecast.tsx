@@ -4,7 +4,7 @@ import { WeatherAppState } from "../../../../redux/weather";
 import { fahrenheitToCelsius } from "../../../../services/degress";
 import { DailyForecast } from "../../../../types/fiveDaysForecasts";
 
-import "./dailyForecast.css";
+import "./dailyForecast.scss";
 
 interface DailyWeatherProps {
   dailyForecast: DailyForecast;
@@ -23,9 +23,9 @@ const DailyWeather: React.FC<DailyWeatherProps> = (props) => {
       : props.dailyForecast.Temperature.Minimum.Value.toFixed(2) + "F";
 
   const maxTemperature =
-    temperatureUnit === "F"
-      ? fahrenheitToCelsius(props.dailyForecast.Temperature.Maximum.Value) + "C"
-      : props.dailyForecast.Temperature.Maximum.Value + "F";
+    temperatureUnit === "C"
+      ? fahrenheitToCelsius(props.dailyForecast.Temperature.Maximum.Value).toFixed(2) + "C"
+      : props.dailyForecast.Temperature.Maximum.Value.toFixed(2) + "F";
 
   return (
     <div className="dailyWeatherContainer">

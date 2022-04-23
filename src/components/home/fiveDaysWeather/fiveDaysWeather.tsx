@@ -7,7 +7,7 @@ import {
 } from "../../../types/fiveDaysForecasts";
 import DailyWeather from "./dailyForecast/dailyForecast";
 
-import "./fiveDaysWeather.css";
+import "./fiveDaysWeather.scss";
 
 interface FiveDaysWeatherProps {
   cityLocationKey: string;

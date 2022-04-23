@@ -6,7 +6,7 @@ import { Autocomplete } from "../../types/autocomplete";
 import CurrentWeather from "./currentWeather/currentWeather";
 import FiveDaysWeather from "./fiveDaysWeather/fiveDaysWeather";
 
-import "./home.css";
+import "./home.scss";
 
 const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,18 +35,18 @@ const Home: React.FC = () => {
 
   return (
     <main className="homeContainer">
-      <div className="searchContainerInHome">
+      <div className="searchContainerHome">
         <input
-          className="searchInputInHome"
+          className="searchInputHome"
           type="text"
           placeholder="search"
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <div
-          className="autoCompleteInHome"
+          className="autocompleteHome"
           style={{ display: searchQuery.length > 0 ? "block" : "none" }}
         >
-          <ul className="listInAutoCompleteInHome">
+          <ul className="listAutocompleteHome">
             {autocompletes.map((autocomplete, i) => {
               return (
                 <li

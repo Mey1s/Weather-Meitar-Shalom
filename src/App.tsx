@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import "./App.css";
+import "./App.scss";
 import Favorites from "./components/favorites/favorites";
 import Home from "./components/home/home";
 import Layout from "./layout/layout";
 import { weatherAppStore } from "./redux/weather";
+import NotFound from "./components/notFound/notFound";
 
 function App() {
   return (
@@ -20,10 +21,11 @@ function App() {
           <Switch>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="*" element={<NotFound />} />
           </Switch>
+          <ToastContainer position="top-right" />
         </Layout>
       </Provider>
-      <ToastContainer />
     </Router>
   );
 }
